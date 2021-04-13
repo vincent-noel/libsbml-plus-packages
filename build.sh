@@ -17,6 +17,7 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_MULTI=ON \
       -DENABLE_QUAL=ON \
       -DENABLE_RENDER=ON \
+      -DENABLE_DISTRIB=ON \
       ..
 make
 make install
