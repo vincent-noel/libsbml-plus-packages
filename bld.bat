@@ -1,7 +1,7 @@
 mkdir build
 cd build
 
-cmake -DCMAKE_INSTALL_PREFIX=%PREFIX% ^
+cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -DCMAKE_INSTALL_LIBDIR=%PREFIX%/lib ^
       -DCMAKE_CXX_COMPILER=clang-cl ^
       -DCMAKE_C_COMPILER=clang-cl ^

@@ -14,7 +14,7 @@ source:
 
 requirements:
   build:
-    - m2w64-toolchain_win-64
+    - {{ compiler("c") }}
     - cmake
     - zlib
     - bzip2
