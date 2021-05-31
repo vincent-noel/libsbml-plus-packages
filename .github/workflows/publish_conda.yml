@@ -4,32 +4,14 @@ on:
   push:
 
 jobs:
-  build_linux:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: s-weigand/setup-conda@v1
-
-    - name: Installing conda-build and anaconda-client
-      run: conda install conda-build anaconda-client
-
-    - name: Linux Publish Conda
-      run : |
-        conda build .
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2 --force
-        
+ 
+       
   build_macosx:
-    runs-on: macos-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
     - uses: s-weigand/setup-conda@v1
-    
-    - name: Downgrading XCode to 11.7
-      run: |
-        sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
-        brew reinstall llvm            
         
     - name: Installing conda-build and anaconda-client
       run: conda install conda-build anaconda-client
@@ -37,4 +19,3 @@ jobs:
     - name: MacOSX Publish Conda
       run : |
         conda build .
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2 --force
