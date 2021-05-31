@@ -3,8 +3,8 @@ cd build
 
 cmake -DCMAKE_INSTALL_PREFIX=%PREFIX% ^
       -DCMAKE_INSTALL_LIBDIR=%PREFIX%/lib ^
-      -DCMAKE_CXX_COMPILER=g++ ^
-      -DCMAKE_C_COMPILER=gcc ^
+      -DCMAKE_CXX_COMPILER=clang-cl ^
+      -DCMAKE_C_COMPILER=clang-cl ^
       -DCMAKE_CXX_STANDARD_LIBRARIES=-lxml2 ^
       -DWITH_SWIG=OFF ^
       -DLIBXML_LIBRARY=%PREFIX%/lib ^
@@ -17,6 +17,6 @@ cmake -DCMAKE_INSTALL_PREFIX=%PREFIX% ^
       -DENABLE_QUAL=ON ^
       -DENABLE_RENDER=ON ^
       -DENABLE_DISTRIB=ON ^
-      ..
+      %SRC_DIR%
 make
 make install
