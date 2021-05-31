@@ -14,8 +14,8 @@ jobs:
     - uses: s-weigand/setup-conda@v1
         
     - name: Installing conda-build and anaconda-client
-      run: conda install conda-build anaconda-client conda-verify
+      run: conda install -c conda-forge conda-build anaconda-client conda-verify m2w64-toolchain_win-64    
 
-    - name: MacOSX Publish Conda
+    - name: Windows build Conda
       run : |
         conda build .
