@@ -6,7 +6,7 @@ on:
 jobs:
  
        
-  build_macosx:
+  build_windows:
     runs-on: windows-latest
 
     steps:
