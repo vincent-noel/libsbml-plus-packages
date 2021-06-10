@@ -36,7 +36,7 @@ jobs:
         -DWITH_CPP_NAMESPACE=ON \
         ..
         make
-        make install
+        sudo make install
         
   build_macosx:
     runs-on: macos-latest
@@ -55,7 +55,7 @@ jobs:
         cd libSBML-5.19.0-Source
         mkdir build
         cd build
-        cmake -DCMAKE_INSTALL_PREFIX=/usr/ \
+        cmake -DCMAKE_INSTALL_PREFIX=/usr/local/ \
         -DCMAKE_INSTALL_LIBDIR=/usr/local/opt/ \
         -DCMAKE_CXX_COMPILER=g++-10 \
         -DCMAKE_C_COMPILER=gcc-10 \
