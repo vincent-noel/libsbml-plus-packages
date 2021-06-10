@@ -50,6 +50,11 @@ jobs:
     
     - name: Compile libSBML
       run: |
+      
+        ls /usr/local/opt/libxml2
+        ls /usr/local/opt/libxml2/lib
+        ls /usr/local/opt/libxml2/include
+        ls /usr/local/opt/libxml2/include/libxml2
         wget https://sourceforge.net/projects/sbml/files/libsbml/5.19.0/stable/libSBML-5.19.0-core-plus-packages-src.tar.gz
         tar -zxf libSBML-5.19.0-core-plus-packages-src.tar.gz
         cd libSBML-5.19.0-Source
