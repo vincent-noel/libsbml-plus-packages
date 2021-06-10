@@ -44,7 +44,7 @@ jobs:
         cp /usr/lib/libsbml* lib/
         mkdir include
         cp -r /usr/include/sbml/ include/
-        tar -zcvf libSBML-5.19.0-linux64.tar.gz
+        tar -zcvf libSBML-5.19.0-linux64.tar.gz *
            
     - uses: actions/upload-artifact@v2
       with:
@@ -95,7 +95,7 @@ jobs:
         cp /usr/local/lib/libsbml* lib/
         mkdir include
         cp -r /usr/local/include/sbml/ include/
-        tar -zcvf libSBML-5.19.0-osx64.tar.gz
+        tar -zcvf libSBML-5.19.0-osx64.tar.gz *
            
     - uses: actions/upload-artifact@v2
       with:
@@ -149,10 +149,10 @@ jobs:
         mkdir package
         cd package
         mkdir lib
-        cp /usr/local/lib/libsbml* lib/
+        cp D:/a/_temp/msys/msys64/mingw64/lib/libsbml* lib/
         mkdir include
-        cp -r /usr/local/include/sbml/ include/
-        tar -zcvf libSBML-5.19.0-win64.tar.gz
+        cp -r D:/a/_temp/msys/msys64/mingw64/include/sbml/ include/
+        tar -zcvf libSBML-5.19.0-win64.tar.gz *
            
     - uses: actions/upload-artifact@v2
       with:
