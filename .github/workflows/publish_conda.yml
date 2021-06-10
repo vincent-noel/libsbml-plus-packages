@@ -46,7 +46,7 @@ jobs:
     
     - name: Install dependencies
       run : |
-        brew install flex bison gcc@10 libxml2 cmake
+        brew install gcc@10 libxml2 cmake
     
     - name: Compile libSBML
       run: |
@@ -55,14 +55,14 @@ jobs:
         cd libSBML-5.19.0-Source
         mkdir build
         cd build
-        cmake -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_INSTALL_LIBDIR=/usr/lib \
-        -DCMAKE_CXX_COMPILER=g++ \
-        -DCMAKE_C_COMPILER=gcc \
+        cmake -DCMAKE_INSTALL_PREFIX=/usr/ \
+        -DCMAKE_INSTALL_LIBDIR=/usr/local/opt/ \
+        -DCMAKE_CXX_COMPILER=g++-10 \
+        -DCMAKE_C_COMPILER=gcc-10 \
         -DCMAKE_CXX_STANDARD_LIBRARIES=-lxml2 \
         -DWITH_SWIG=OFF \
-        -DLIBXML_LIBRARY=/usr/lib \
-        -DLIBXML_INCLUDE_DIR=/usr/include/libxml2 \
+        -DLIBXML_LIBRARY=/usr/local/opt/libxml2/lib \
+        -DLIBXML_INCLUDE_DIR=/usr/local/opt/libxml2/include \
         -DENABLE_COMP=ON \
         -DENABLE_FBC=ON \
         -DENABLE_GROUPS=ON \
@@ -118,38 +118,3 @@ jobs:
           ..
         make 
         make install
-
-  build_conda_linux:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: s-weigand/setup-conda@v1
-
-    - name: Installing conda-build and anaconda-client
-      run: conda install conda-build anaconda-client
-
-    - name: Linux Publish Conda
-      run : |
-        conda build .
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2 --force
-        
-  build_conda_macosx:
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: s-weigand/setup-conda@v1
-    
-    - name: Downgrading XCode to 11.7
-      run: |
-        sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
-        brew reinstall llvm            
-        
-    - name: Installing conda-build and anaconda-client
-      run: conda install conda-build anaconda-client
-
-    - name: MacOSX Publish Conda
-      run : |
-        conda build .
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2 --force
