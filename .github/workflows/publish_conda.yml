@@ -37,6 +37,19 @@ jobs:
         ..
         make
         sudo make install
+        cd ..
+        mkdir package
+        cd package
+        mkdir lib
+        cp /usr/lib/libsbml* lib/
+        mkdir include
+        cp -r /usr/include/libsbml/ include/
+        tar -zcvf libSBML-5.19.0-linux64.tar.gz
+           
+    - uses: actions/upload-artifact@v2
+      with:
+        name: libSBML-5.19.0-linux64
+        path: /home/runner/work/libsbml-plus-packages/libsbml-plus-packages/libSBML-5.19.0-Source/package/libSBML-5.19.0-linux64.tar.gz
         
   build_macosx:
     runs-on: macos-latest
@@ -56,7 +69,7 @@ jobs:
         mkdir build
         cd build
         cmake -DCMAKE_INSTALL_PREFIX=/usr/local/ \
-        -DCMAKE_INSTALL_LIBDIR=/usr/local/opt/ \
+        -DCMAKE_INSTALL_LIBDIR=/usr/local/lib/ \
         -DCMAKE_CXX_COMPILER=g++-10 \
         -DCMAKE_C_COMPILER=gcc-10 \
         -DCMAKE_CXX_STANDARD_LIBRARIES=-lxml2 \
@@ -75,6 +88,20 @@ jobs:
         ..
         make
         make install
+        cd ..
+        mkdir package
+        cd package
+        mkdir lib
+        cp /usr/local/lib/libsbml* lib/
+        mkdir include
+        cp -r /usr/local/include/libsbml/ include/
+        tar -zcvf libSBML-5.19.0-osx64.tar.gz
+           
+    - uses: actions/upload-artifact@v2
+      with:
+        name: libSBML-5.19.0-osx64
+        path: /Users/runner/work/libsbml-plus-packages/libsbml-plus-packages/libSBML-5.19.0-Source/package/libSBML-5.19.0-osx64.tar.gz
+        
 
   build_windows:
     runs-on: windows-latest
@@ -118,3 +145,17 @@ jobs:
           ..
         make 
         make install
+        cd ..
+        mkdir package
+        cd package
+        mkdir lib
+        cp /usr/local/lib/libsbml* lib/
+        mkdir include
+        cp -r /usr/local/include/libsbml/ include/
+        tar -zcvf libSBML-5.19.0-win64.tar.gz
+           
+    - uses: actions/upload-artifact@v2
+      with:
+        name: libSBML-5.19.0-win64
+        path: D:\a\libsbml-plus-packages\libsbml-plus-packages/libSBML-5.19.0-Source/package/libSBML-5.19.0-win64.tar.gz
+        
