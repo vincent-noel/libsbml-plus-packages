@@ -44,12 +44,12 @@ jobs:
         cp /usr/lib/libsbml* lib/
         mkdir include
         cp -r /usr/include/sbml/ include/
-        tar -zcvf libSBML-5.19.0-linux64.tar.gz *
+        # tar -zcvf libSBML-5.19.0-linux64.tar.gz *
            
     - uses: actions/upload-artifact@v2
       with:
         name: libSBML-5.19.0-linux64
-        path: /home/runner/work/libsbml-plus-packages/libsbml-plus-packages/libSBML-5.19.0-Source/package/libSBML-5.19.0-linux64.tar.gz
+        path: /home/runner/work/libsbml-plus-packages/libsbml-plus-packages/libSBML-5.19.0-Source/package/*
         
   build_macosx:
     runs-on: macos-latest
@@ -95,12 +95,12 @@ jobs:
         cp /usr/local/lib/libsbml* lib/
         mkdir include
         cp -r /usr/local/include/sbml/ include/
-        tar -zcvf libSBML-5.19.0-osx64.tar.gz *
+        # tar -zcvf libSBML-5.19.0-osx64.tar.gz *
            
     - uses: actions/upload-artifact@v2
       with:
         name: libSBML-5.19.0-osx64
-        path: /Users/runner/work/libsbml-plus-packages/libsbml-plus-packages/libSBML-5.19.0-Source/package/libSBML-5.19.0-osx64.tar.gz
+        path: /Users/runner/work/libsbml-plus-packages/libsbml-plus-packages/libSBML-5.19.0-Source/package/*
         
 
   build_windows:
@@ -152,10 +152,10 @@ jobs:
         cp D:/a/_temp/msys/msys64/mingw64/lib/libsbml* lib/
         mkdir include
         cp -r D:/a/_temp/msys/msys64/mingw64/include/sbml/ include/
-        tar -zcvf libSBML-5.19.0-win64.tar.gz *
+        # tar -zcvf libSBML-5.19.0-win64.tar.gz *
            
     - uses: actions/upload-artifact@v2
       with:
         name: libSBML-5.19.0-win64
-        path: D:\a\libsbml-plus-packages\libsbml-plus-packages/libSBML-5.19.0-Source/package/libSBML-5.19.0-win64.tar.gz
+        path: D:\a\libsbml-plus-packages\libsbml-plus-packages/libSBML-5.19.0-Source/package/*
         
