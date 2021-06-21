@@ -1,4 +1,6 @@
 #!/bin/bash
+
+echo Running build.sh
 mkdir build
 cd build
 

@@ -1,3 +1,5 @@
+echo Running bld.bat
+
 mkdir build
 cd build
 
