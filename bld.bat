@@ -7,6 +7,8 @@ dir
 %CXX%
 clang-cl --version
 cmake --version
+dir %LIBRARY_LIB%
+dir %LIBRARY_INC%
 cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -DCMAKE_INSTALL_LIBDIR=%LIBRARY_LIB% ^
       -DCMAKE_CXX_COMPILER=%CXX% ^
