@@ -20,6 +20,6 @@ cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       %SRC_DIR%
       
 echo Running make
-make
+@REM make
 echo Running make install
-make install
+@REM make install
