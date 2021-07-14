@@ -18,6 +18,7 @@ cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} \
       -DENABLE_QUAL=ON \
       -DENABLE_RENDER=ON \
       -DENABLE_DISTRIB=ON \
+      -DWITH_CPP_NAMESPACE=ON \
       ..
 make
 make install

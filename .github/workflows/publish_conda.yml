@@ -4,6 +4,7 @@ on:
   push:
 
 jobs:
+
   build_linux:
     runs-on: ubuntu-latest
 
@@ -11,13 +12,21 @@ jobs:
     - uses: actions/checkout@v2
     - uses: s-weigand/setup-conda@v1
 
-    - name: Installing conda-build and anaconda-client
-      run: conda install conda-build anaconda-client
+    - name: Install Conda
+      run: |
+        conda update conda
+        conda config --add channels conda-forge
+        conda config --set channel_priority strict
+        conda update --all
+        conda install conda-build anaconda-client conda-verify
 
-    - name: Linux Publish Conda
+    - name: Build
       run : |
         conda build .
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2 --force
+        
+    - name: Publish
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
         
   build_macosx:
     runs-on: macos-latest
@@ -31,45 +40,18 @@ jobs:
         sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
         brew reinstall llvm            
         
-    - name: Installing conda-build and anaconda-client
-      run: conda install conda-build anaconda-client
+    - name: Install Conda
+      run: |
+        conda update conda
+        conda config --add channels conda-forge
+        conda config --set channel_priority strict
+        conda update --all
+        conda install conda-build anaconda-client conda-verify
 
-    - name: MacOSX Publish Conda
+    - name: Build
       run : |
         conda build .
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2 --force
-
-  build_linux_wnamespace:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: s-weigand/setup-conda@v1
-
-    - name: Installing conda-build and anaconda-client
-      run: conda install conda-build anaconda-client
-
-    - name: Linux Publish Conda
-      run : |
-        conda build ./with_namespace
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2 --force
         
-  build_macosx_wnamespace:
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - uses: s-weigand/setup-conda@v1
-    
-    - name: Downgrading XCode to 11.7
+    - name: Publish
       run: |
-        sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
-        brew reinstall llvm            
-        
-    - name: Installing conda-build and anaconda-client
-      run: conda install conda-build anaconda-client
-
-    - name: MacOSX Publish Conda
-      run : |
-        conda build ./with_namespace
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload -u vincent-noel /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2 --force
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2
