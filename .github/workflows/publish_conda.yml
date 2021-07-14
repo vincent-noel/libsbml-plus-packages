@@ -2,7 +2,9 @@ name: Publish package
 
 on:
   push:
-
+  release:
+    types: [created]
+    
 jobs:
 
   build_linux:
@@ -28,6 +30,11 @@ jobs:
       run: |
         anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
         
+    - name: Publish on CoLoMoTo
+      if: github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
+       
   build_macosx:
     runs-on: macos-latest
 
@@ -55,3 +62,8 @@ jobs:
     - name: Publish
       run: |
         anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2
+
+    - name: Publish on CoLoMoTo
+      if: github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2
