@@ -6,7 +6,11 @@ package:
   version: {{ version }}
 
 build:
-  number: 0
+  {% if CUSTOM_BUILD_NUMBER is defined %}
+    number: {{ CUSTOM_BUILD_NUMBER }}
+  {% else %}
+    number: 0
+  {% endif %}
 
 source:  
   url: https://sourceforge.net/projects/sbml/files/libsbml/{{ version }}/stable/libSBML-{{ version }}-core-plus-packages-src.tar.gz

@@ -50,7 +50,7 @@ jobs:
 
     - name: Build
       run : |
-        conda build .
+        CUSTOM_BUILD_NUMBER=1 conda build .
         
     - name: Publish
       run: |
@@ -115,7 +115,7 @@ jobs:
 
     - name: Build
       run : |
-        conda build .
+        CUSTOM_BUILD_NUMBER=1 conda build .
         
     - name: Publish
       run: |
