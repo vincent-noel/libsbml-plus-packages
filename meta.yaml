@@ -21,17 +21,18 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
+    - make
     - zlib
     - bzip2
-    - libxml2
+    - libxml2 {{ libxml2 }}
     
   host:
-    - libxml2
+    - libxml2 {{ libxml2 }}
     - zlib
     - bzip2
     
   run:
-    - libxml2
+    - libxml2 {{ libxml2 }}
     - zlib
     - bzip2
 
