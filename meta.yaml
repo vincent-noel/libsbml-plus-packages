@@ -1,5 +1,5 @@
-{% set version = "5.19.0" %}
-{% set sha256 = "a7f0e18be78ff0e064e4cdb1cd86634d08bc33be5250db4a1878bd81eeb8b547" %}
+{% set version = "5.20.0" %}
+{% set sha256 = "400f1e1039ef0fc9addc99660a3a2559fefe9cb2c8315b1b488014b6101c438f" %}
 
 package:
   name: libsbml-plus-packages
@@ -13,7 +13,7 @@ build:
   {% endif %}
 
 source:  
-  url: https://sourceforge.net/projects/sbml/files/libsbml/{{ version }}/stable/libSBML-{{ version }}-core-plus-packages-src.tar.gz
+  url: https://github.com/sbmlteam/libsbml/archive/refs/tags/v{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 requirements:
