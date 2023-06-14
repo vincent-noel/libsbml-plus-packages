@@ -67,18 +67,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: s-weigand/setup-conda@v1
-    
-    - name: Downgrading XCode to 11.7
-      run: |
-        sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
-        brew reinstall llvm            
-        
+     
     - name: Install Conda
       run: |
         conda update conda
         conda update --all
         conda install conda-build anaconda-client conda-verify
 
+    - name: Installing MacOSX10.10 SDK
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.10.sdk.tar.xz
+        sudo tar xf MacOSX10.10.sdk.tar.xz -C /opt
+        echo "conda_build:" > ~/.condarc
+        echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
+        echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX10.10.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+        
     - name: Build
       run : |
         conda build .
@@ -99,11 +103,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: s-weigand/setup-conda@v1
-    
-    - name: Downgrading XCode to 11.7
-      run: |
-        sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
-        brew reinstall llvm            
         
     - name: Install Conda
       run: |
@@ -113,6 +112,15 @@ jobs:
         conda update --all
         conda install conda-build anaconda-client conda-verify
 
+    - name: Installing MacOSX10.10 SDK
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.10.sdk.tar.xz
+        sudo tar xf MacOSX10.10.sdk.tar.xz -C /opt
+        echo "conda_build:" > ~/.condarc
+        echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
+        echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX10.10.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+        
     - name: Build
       run : |
         CUSTOM_BUILD_NUMBER=1 conda build .
