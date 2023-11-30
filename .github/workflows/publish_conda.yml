@@ -22,7 +22,7 @@ jobs:
 
     - name: Build
       run : |
-        conda build .
+        conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\"]}" .
         
     - name: Publish
       run: |
@@ -50,7 +50,7 @@ jobs:
 
     - name: Build
       run : |
-        CUSTOM_BUILD_NUMBER=1 conda build .
+        CUSTOM_BUILD_NUMBER=1 conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.11\", \"2.12\"]}" . 
         
     - name: Publish
       run: |
@@ -85,7 +85,7 @@ jobs:
         
     - name: Build
       run : |
-        conda build .
+        conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\"]}" .
         
     - name: Publish
       run: |
@@ -123,7 +123,7 @@ jobs:
         
     - name: Build
       run : |
-        CUSTOM_BUILD_NUMBER=1 conda build .
+        CUSTOM_BUILD_NUMBER=1 conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.11\", \"2.12\"]}" . 
         
     - name: Publish
       run: |
