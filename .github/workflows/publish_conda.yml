@@ -10,14 +10,22 @@ jobs:
   build_linux_defaults:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        shell: bash -el {0}
+
     steps:
     - uses: actions/checkout@v4
-    - uses: s-weigand/setup-conda@v1
-
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: defaults
+        python-version: 3.12
+        miniforge-variant: Mambaforge
+        use-mamba: true
+        
     - name: Install Conda
       run: |
-        conda update conda
-        conda update --all
         conda install conda-build anaconda-client conda-verify
 
     - name: Build
@@ -26,62 +34,76 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.tar.bz2
         
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.tar.bz2
        
   build_linux_conda_forge:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        shell: bash -el {0}
+
     steps:
     - uses: actions/checkout@v4
-    - uses: s-weigand/setup-conda@v1
-
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: conda-forge
+        python-version: 3.12
+        miniforge-variant: Mambaforge
+        use-mamba: true
+        
     - name: Install Conda
       run: |
-        conda update conda
-        conda config --add channels conda-forge
-        conda config --set channel_priority strict
-        conda update --all
         conda install conda-build anaconda-client conda-verify
 
     - name: Build
       run : |
-        CUSTOM_BUILD_NUMBER=1 conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.11\"]}" . 
+        CUSTOM_BUILD_NUMBER=1 conda build -c conda-forge --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.11\"]}" . 
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.tar.bz2
         
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /usr/share/miniconda/conda-bld/linux-64/*.tar.bz2
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.tar.bz2
   
   build_macosx_defaults:
-    runs-on: macos-latest
+    runs-on: macos-13
 
+    defaults:
+      run:
+        shell: sh -l {0}
+            
     steps:
     - uses: actions/checkout@v4
-    - uses: s-weigand/setup-conda@v1
-     
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: defaults
+        python-version: 3.12
+        miniforge-variant: Mambaforge
+        use-mamba: true
+         
     - name: Install Conda
       run: |
-        conda update conda
-        conda update --all
         conda install conda-build anaconda-client conda-verify
 
-    - name: Installing MacOSX10.10 SDK
+    - name: Installing MacOSX10.13 SDK
       run: |
-        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.10.sdk.tar.xz
-        sudo tar xf MacOSX10.10.sdk.tar.xz -C /opt
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.13.sdk.tar.xz
+        sudo tar xf MacOSX10.13.sdk.tar.xz -C /opt
         echo "conda_build:" > ~/.condarc
         echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
         echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
-        echo "  - /opt/MacOSX10.10.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX10.13.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
         
     - name: Build
       run : |
@@ -89,27 +111,33 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /Users/runner/miniconda3/envs/test/conda-bld/osx-64/*.tar.bz2
 
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /Users/runner/miniconda3/envs/test/conda-bld/osx-64/*.tar.bz2
 
         
   build_macosx_conda_forge:
-    runs-on: macos-latest
+    runs-on: macos-13
 
+    defaults:
+      run:
+        shell: sh -l {0}
+            
     steps:
     - uses: actions/checkout@v4
-    - uses: s-weigand/setup-conda@v1
-        
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: conda-forge
+        python-version: 3.12
+        miniforge-variant: Mambaforge
+        use-mamba: true
+            
     - name: Install Conda
       run: |
-        conda update conda
-        conda config --add channels conda-forge
-        conda config --set channel_priority strict
-        conda update --all
         conda install conda-build anaconda-client conda-verify
 
     - name: Installing MacOSX10.13 SDK
@@ -127,9 +155,96 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /Users/runner/miniconda3/envs/test/conda-bld/osx-64/*.tar.bz2
 
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /usr/local/miniconda/conda-bld/osx-64/*.tar.bz2
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /Users/runner/miniconda3/envs/test/conda-bld/osx-64/*.tar.bz2
+
+  build_macosx_M1_defaults:
+    runs-on: macos-14
+
+    defaults:
+      run:
+        shell: sh -l {0}
+            
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: defaults
+        python-version: 3.12
+        miniforge-variant: Mambaforge
+        use-mamba: true
+          
+    - name: Install Conda
+      run: |
+        conda install conda-build anaconda-client conda-verify
+
+    - name: Installing MacOSX10.13 SDK
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.0.sdk.tar.xz
+        sudo tar xf MacOSX11.0.sdk.tar.xz -C /opt
+        echo "conda_build:" > ~/.condarc
+        echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
+        echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX11.0.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+        
+    - name: Build
+      run : |
+        conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\"]}" .
+        
+    - name: Publish
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /Users/runner/miniconda3/envs/test/conda-bld/osx-arm64/*.tar.bz2
+
+    - name: Publish on CoLoMoTo
+      if: github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /Users/runner/miniconda3/envs/test/conda-bld/osx-arm64/*.tar.bz2
+
+        
+  build_macosx_M1_conda_forge:
+    runs-on: macos-14
+
+    defaults:
+      run:
+        shell: sh -l {0}
+            
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: conda-forge
+        python-version: 3.12
+        miniforge-variant: Mambaforge
+        use-mamba: true
+            
+    - name: Install Conda
+      run: |
+        conda install conda-build anaconda-client conda-verify
+
+    - name: Installing MacOSX10.13 SDK
+      run: |
+        wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.0.sdk.tar.xz
+        sudo tar xf MacOSX11.0.sdk.tar.xz -C /opt
+        echo "conda_build:" > ~/.condarc
+        echo "  config_file: ~/.conda/conda_build_config.yaml" >> ~/.condarc
+        echo "CONDA_BUILD_SYSROOT:" > ~/.conda/conda_build_config.yaml
+        echo "  - /opt/MacOSX11.0.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
+        
+    - name: Build
+      run : |
+        CUSTOM_BUILD_NUMBER=1 conda build -c conda-forge --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.11\"]}" . 
+        
+    - name: Publish
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /Users/runner/miniconda3/envs/test/conda-bld/osx-arm64/*.tar.bz2
+
+    - name: Publish on CoLoMoTo
+      if: github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /Users/runner/miniconda3/envs/test/conda-bld/osx-arm64/*.tar.bz2
