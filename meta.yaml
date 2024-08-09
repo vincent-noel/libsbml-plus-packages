@@ -28,14 +28,9 @@ requirements:
     
   host:
     - libxml2 {{ libxml2 }}
-    - zlib
-    - bzip2
     
   run:
     - libxml2 {{ libxml2 }}
-    - zlib
-    - bzip2
-
 test:
   commands:
     - test -f ${PREFIX}/lib/libsbml.so  # [linux]
