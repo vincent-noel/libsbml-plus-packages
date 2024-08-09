@@ -104,6 +104,8 @@ jobs:
         echo "  - /opt/MacOSX10.13.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
         
     - name: Build
+      env:
+        MACOSX_DEPLOYMENT_TARGET: 10.13
       run : |
         conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\"]}" .
         
@@ -148,6 +150,8 @@ jobs:
         echo "  - /opt/MacOSX10.13.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
         
     - name: Build
+      env:
+        MACOSX_DEPLOYMENT_TARGET: 10.13
       run : |
         CUSTOM_BUILD_NUMBER=1 conda build -c conda-forge --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.11\"]}" . 
         
@@ -180,7 +184,7 @@ jobs:
       run: |
         conda install conda-build anaconda-client conda-verify
 
-    - name: Installing MacOSX10.13 SDK
+    - name: Installing MacOSX11.0 SDK
       run: |
         wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.0.sdk.tar.xz
         sudo tar xf MacOSX11.0.sdk.tar.xz -C /opt
@@ -190,6 +194,8 @@ jobs:
         echo "  - /opt/MacOSX11.0.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
         
     - name: Build
+      env:
+        MACOSX_DEPLOYMENT_TARGET: 11.0
       run : |
         conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\"]}" .
         
@@ -224,7 +230,7 @@ jobs:
       run: |
         conda install conda-build anaconda-client conda-verify
 
-    - name: Installing MacOSX10.13 SDK
+    - name: Installing MacOSX11.0 SDK
       run: |
         wget https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.0.sdk.tar.xz
         sudo tar xf MacOSX11.0.sdk.tar.xz -C /opt
@@ -234,6 +240,8 @@ jobs:
         echo "  - /opt/MacOSX11.0.sdk        # [osx]" >> ~/.conda/conda_build_config.yaml
         
     - name: Build
+      env:
+        MACOSX_DEPLOYMENT_TARGET: 11.0
       run : |
         CUSTOM_BUILD_NUMBER=1 conda build -c conda-forge --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.11\"]}" . 
         
