@@ -1,5 +1,5 @@
-{% set version = "5.20.2" %}
-{% set sha256 = "a196cab964b0b41164d4118ef20523696510bbfd264a029df00091305a1af540" %}
+{% set version = "5.20.4" %}
+{% set sha256 = "02c225d3513e1f5d6e3c0168456f568e67f006eddaab82f09b4bdf0d53d2050e" %}
 
 package:
   name: libsbml-plus-packages
