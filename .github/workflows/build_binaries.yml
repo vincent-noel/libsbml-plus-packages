@@ -37,7 +37,7 @@ jobs:
         -DENABLE_DISTRIB=ON \
         -DWITH_CPP_NAMESPACE=ON \
         ..
-        make
+        make -j 4
         sudo make install
         cd ..
         mkdir package
@@ -46,7 +46,6 @@ jobs:
         cp /usr/lib/libsbml* lib/
         mkdir include
         cp -r /usr/include/sbml/ include/
-        # tar -zcvf libsbml-5.20.4-linux64.tar.gz *
            
     - uses: actions/upload-artifact@v4
       with:
@@ -54,7 +53,7 @@ jobs:
         path: /home/runner/work/libsbml-plus-packages/libsbml-plus-packages/libsbml-5.20.4/package/*
         
   build_macosx:
-    runs-on: macos-latest
+    runs-on: macos-13
     
     steps:
     - uses: actions/checkout@v4
@@ -62,10 +61,10 @@ jobs:
     - name: Install dependencies
       run : |
         brew install libxml2
-    
+      
     - name: Compile libSBML
       env: 
-        MACOSX_DEPLOYMENT_TARGET: 12.0
+        MACOSX_DEPLOYMENT_TARGET: 13.0
       run: |
         wget https://github.com/sbmlteam/libsbml/archive/refs/tags/v5.20.4.tar.gz
         tar -zxf v5.20.4.tar.gz
@@ -76,6 +75,59 @@ jobs:
         -DCMAKE_INSTALL_LIBDIR=/usr/local/lib/ \
         -DCMAKE_CXX_COMPILER=g++-12 \
         -DCMAKE_C_COMPILER=gcc-12 \
+        -DCMAKE_CXX_STANDARD_LIBRARIES=-lxml2 \
+        -DWITH_SWIG=OFF \
+        -DLIBXML_LIBRARY=/usr/local/opt/libxml2/lib/libxml2.2.dylib \
+        -DLIBXML_INCLUDE_DIR=/usr/local/opt/libxml2/include/libxml2 \
+        -DENABLE_COMP=ON \
+        -DENABLE_FBC=ON \
+        -DENABLE_GROUPS=ON \
+        -DENABLE_LAYOUT=ON \
+        -DENABLE_MULTI=ON \
+        -DENABLE_QUAL=ON \
+        -DENABLE_RENDER=ON \
+        -DENABLE_DISTRIB=ON \
+        -DWITH_CPP_NAMESPACE=ON \
+        ..
+        make -j 4
+        sudo make install
+        cd ..
+        mkdir package
+        cd package
+        mkdir lib
+        cp /usr/local/lib/libsbml* lib/
+        mkdir include
+        cp -r /usr/local/include/sbml include/
+        
+    - uses: actions/upload-artifact@v4
+      with:
+        name: libSBML-5.20.4-osx-x86_64
+        path: /Users/runner/work/libsbml-plus-packages/libsbml-plus-packages/libsbml-5.20.4/package/*
+        
+      
+  build_macosx_m1:
+    runs-on: macos-14
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run : |
+        brew install libxml2
+    
+    - name: Compile libSBML
+      env: 
+        MACOSX_DEPLOYMENT_TARGET: 14.0
+      run: |
+        wget https://github.com/sbmlteam/libsbml/archive/refs/tags/v5.20.4.tar.gz
+        tar -zxf v5.20.4.tar.gz
+        cd libsbml-5.20.4
+        mkdir build
+        cd build
+        cmake -DCMAKE_INSTALL_PREFIX=/usr/local/ \
+        -DCMAKE_INSTALL_LIBDIR=/usr/local/lib/ \
+        -DCMAKE_CXX_COMPILER=g++-13 \
+        -DCMAKE_C_COMPILER=gcc-13 \
         -DCMAKE_CXX_STANDARD_LIBRARIES=-lxml2 \
         -DWITH_SWIG=OFF \
         -DLIBXML_LIBRARY=/opt/homebrew/opt/libxml2/lib/libxml2.2.dylib \
@@ -90,7 +142,7 @@ jobs:
         -DENABLE_DISTRIB=ON \
         -DWITH_CPP_NAMESPACE=ON \
         ..
-        make
+        make -j 3
         sudo make install
         cd ..
         mkdir package
@@ -99,14 +151,12 @@ jobs:
         cp /usr/local/lib/libsbml* lib/
         mkdir include
         cp -r /usr/local/include/sbml include/
-        # tar -zcvf libSBML-5.19.0-osx64.tar.gz *  
         
     - uses: actions/upload-artifact@v4
       with:
-        name: libSBML-5.20.4-osx64
+        name: libSBML-5.20.4-osx-arm64
         path: /Users/runner/work/libsbml-plus-packages/libsbml-plus-packages/libsbml-5.20.4/package/*
-        
-
+              
   build_windows:
     runs-on: windows-latest
     
@@ -156,7 +206,6 @@ jobs:
         cp D:/a/_temp/msys64/mingw64/lib/libsbml* lib/
         mkdir include
         cp -r D:/a/_temp/msys64/mingw64/include/sbml/ include/
-        # tar -zcvf libSBML-5.20.4-win64.tar.gz *
            
     - uses: actions/upload-artifact@v4
       with:
