@@ -1,7 +1,5 @@
 echo on
 
-mkdir build
-
 cmake -G"Ninja" -S . -B build ^
     -DCMAKE_INSTALL_PREFIX="%PREFIX%" ^
     -DCMAKE_INSTALL_LIBDIR="%PREFIX%"/lib ^
