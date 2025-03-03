@@ -66,12 +66,12 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /home/runner/miniconda/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.conda
         
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /home/runner/miniconda/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.conda
   
   build_macosx_defaults:
     runs-on: macos-13
