@@ -276,7 +276,7 @@ jobs:
       env:
         CMAKE_GENERATOR: "Visual Studio 14 2015"
       run : |
-        conda build --variants "{libxml2: [2.9, 2.10, 2.13]}" .
+        conda build --variants "{libxml2: [2.10, 2.13]}" .
         
     - name: Publish
       run: |
@@ -312,7 +312,7 @@ jobs:
         CUSTOM_BUILD_NUMBER: 1
         CMAKE_GENERATOR: "Visual Studio 14 2015"
       run : |
-        conda build -c conda-forge --variants "{libxml2: [2.9, 2.10, 2.11, 2.12, 2.13]}" . 
+        conda build -c conda-forge --variants "{libxml2: [2.10, 2.11, 2.12, 2.13]}" . 
         
     - name: Publish
       run: |
