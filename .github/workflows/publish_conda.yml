@@ -8,7 +8,7 @@ on:
 jobs:
 
   build_linux_defaults:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     defaults:
       run:
@@ -33,15 +33,15 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/share/miniconda/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
         
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /usr/share/miniconda/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
        
   build_linux_conda_forge:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     defaults:
       run:
@@ -66,12 +66,12 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
         
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}a/envs/test/conda-bld/linux-64/*.conda
   
   build_macosx_defaults:
     runs-on: macos-13
@@ -110,12 +110,12 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /Users/runner/miniconda3/envs/test/conda-bld/osx-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/osx-64/*.conda
 
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /Users/runner/miniconda3/envs/test/conda-bld/osx-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/osx-64/*.conda
 
         
   build_macosx_conda_forge:
@@ -155,12 +155,12 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /Users/runner/miniconda3/envs/test/conda-bld/osx-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/osx-64/*.conda
 
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /Users/runner/miniconda3/envs/test/conda-bld/osx-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/osx-64/*.conda
 
   build_macosx_M1_defaults:
     runs-on: macos-14
@@ -199,12 +199,12 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /Users/runner/miniconda3/envs/test/conda-bld/osx-arm64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/osx-arm64/*.conda
 
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /Users/runner/miniconda3/envs/test/conda-bld/osx-arm64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/osx-arm64/*.conda
 
         
   build_macosx_M1_conda_forge:
@@ -244,12 +244,12 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /Users/runner/miniconda3/envs/test/conda-bld/osx-arm64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/osx-arm64/*.conda
 
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /Users/runner/miniconda3/envs/test/conda-bld/osx-arm64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/osx-arm64/*.conda
 
         
   build_windows_defaults:
@@ -278,12 +278,12 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /usr/share/miniconda/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
         
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /usr/share/miniconda/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
        
   build_windows_conda_forge:
     runs-on: windows-2019
@@ -313,10 +313,10 @@ jobs:
         
     - name: Publish
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
         
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto /home/runner/miniconda3/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
   
