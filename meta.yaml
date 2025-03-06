@@ -21,7 +21,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
-    - make
+    - make # [not win]
+    - ninja # [win]
     - zlib
     - bzip2
     - libxml2 {{ libxml2 }}
