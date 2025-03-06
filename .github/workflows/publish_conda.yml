@@ -249,5 +249,74 @@ jobs:
     - name: Publish on CoLoMoTo
       if: github.event_name == 'release'
       run: |
-        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/osx-arm64/*.conda
+
+        
+  build_windows_defaults:
+    runs-on: windows-2019
+
+    defaults:
+      run:
+        shell: pwsh -Command {0}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: defaults
+        python-version: 3.12
+        use-mamba: true
+        
+    - name: Install Conda
+      run: |
+        conda install conda-build anaconda-client conda-verify
+
+    - name: Build
+      run : |
+        conda build --variants "{libxml2: [2.13]}" .
+        
+    - name: Publish
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/win-64/*.conda
+        
+    - name: Publish on CoLoMoTo
+      if: github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/win-64/*.conda
+       
+  build_windows_conda_forge:
+    runs-on: windows-2019
+
+    defaults:
+      run:
+        shell: pwsh -Command {0}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: conda-forge
+        python-version: 3.12
+        use-mamba: true
+        
+    - name: Install Conda
+      run: |
+        conda install conda-build anaconda-client conda-verify
+        
+    - name: Build
+      env:
+        CUSTOM_BUILD_NUMBER: 1
+      run : |
+        conda build -c conda-forge --variants "{libxml2: [2.10, 2.11, 2.12, 2.13]}" . 
+        
+    - name: Publish
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/win-64/*.conda
+        
+    - name: Publish on CoLoMoTo
+      if: github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/win-64/*.conda
   
