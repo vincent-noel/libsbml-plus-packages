@@ -1,8 +1,9 @@
 echo on
 
 cmake -G"Ninja" -S . -B build ^
-    -DCMAKE_INSTALL_PREFIX="%PREFIX%" ^
-    -DCMAKE_INSTALL_LIBDIR="%PREFIX%"/lib ^
+    -DCMAKE_INSTALL_PREFIX="%PREFIX%"/Library ^
+    -DCMAKE_INSTALL_LIBDIR="%PREFIX%"/Library/lib ^
+    -DCMAKE_INSTALL_INCLUDEDIR="%PREFIX%"/Library/include ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DBUILD_SHARED_LIBS=ON ^
     -DCMAKE_CXX_COMPILER="%CXX%" ^
