@@ -23,21 +23,17 @@ requirements:
     - cmake
     - make # [not win]
     - ninja # [win]
-    - zlib
-    - bzip2
-    - libxml2 {{ libxml2 }}
     
   host:
     - zlib
     - bzip2
     - libxml2 {{ libxml2 }}
     
-  run:
-    - libxml2 {{ libxml2 }}
 test:
   commands:
     - test -f ${PREFIX}/lib/libsbml.so  # [linux]
 
+    
 about:
   home: http://sbml.org/Software/libSBML
   license: LGPL
