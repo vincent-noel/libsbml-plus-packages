@@ -253,7 +253,7 @@ jobs:
 
         
   build_windows_defaults:
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     defaults:
       run:
@@ -261,6 +261,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: win64
     - uses: conda-incubator/setup-miniconda@v3
       with:
         auto-update-conda: true
@@ -286,7 +289,7 @@ jobs:
         anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/win-64/*.conda
        
   build_windows_conda_forge:
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     defaults:
       run:
@@ -294,6 +297,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: win64
     - uses: conda-incubator/setup-miniconda@v3
       with:
         auto-update-conda: true
