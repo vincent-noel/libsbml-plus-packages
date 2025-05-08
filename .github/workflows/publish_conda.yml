@@ -277,6 +277,31 @@ jobs:
 
     - name: Build
       run : |
+        echo $env:Path
+        Function Set-PathVariable {
+          param (
+              [string]$RemovePath
+          )
+          $regexPaths = @()
+          if ($PSBoundParameters.Keys -contains 'RemovePath'){
+              $regexPaths += [regex]::Escape($RemovePath)
+          }
+          
+          $arrPath = [System.Environment]::GetEnvironmentVariable('PATH') -split ';'
+          foreach ($path in $regexPaths) {
+              $arrPath = $arrPath | Where-Object {$_ -notMatch "^$path\\?"}
+          }
+          $env:Path = $arrPath -join ';'
+        }
+        Set-PathVariable 'C:\Program Files\Microsoft SQL Server\130\DTS\Binn'
+        Set-PathVariable 'C:\Program Files\Microsoft SQL Server\140\DTS\Binn'
+        Set-PathVariable 'C:\Program Files\Microsoft SQL Server\150\DTS\Binn'
+        Set-PathVariable 'C:\Program Files\Microsoft SQL Server\160\DTS\Binn'
+        Set-PathVariable 'C:\Program Files\Microsoft SQL Server\130\Tools\Binn'
+        Set-PathVariable 'C:\Program Files\Microsoft SQL Server\150\Tools\Binn'
+        Set-PathVariable 'C:\Program Files\Microsoft SQL Server\170\Tools\Binn'
+        echo $env:Path
+        [System.Environment]::SetEnvironmentVariable('PATH', $env:Path)
         conda build --variants "{libxml2: [2.13]}" .
         
     - name: Publish
