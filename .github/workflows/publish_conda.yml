@@ -73,6 +73,73 @@ jobs:
       run: |
         anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/linux-64/*.conda
   
+        
+  build_linux_aarch64_defaults:
+    runs-on: ubuntu-24.04-arm
+
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: defaults
+        python-version: 3.12
+        use-mamba: true
+        
+    - name: Install Conda
+      run: |
+        conda install conda-build anaconda-client conda-verify
+
+    - name: Build
+      run : |
+        conda build --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.13\"]}" .
+        
+    - name: Publish
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/linux-aarch64/*.conda
+        
+    - name: Publish on CoLoMoTo
+      if: github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/linux-aarch64/*.conda
+       
+  build_linux_aarch64_conda_forge:
+    runs-on: ubuntu-24.04-arm
+
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        channels: conda-forge
+        python-version: 3.12
+        use-mamba: true
+        
+    - name: Install Conda
+      run: |
+        conda install conda-build anaconda-client conda-verify
+
+    - name: Build
+      run : |
+        CUSTOM_BUILD_NUMBER=1 conda build -c conda-forge --variants "{\"libxml2\": [\"2.9\", \"2.10\", \"2.11\", \"2.12\", \"2.13\"]}" . 
+        
+    - name: Publish
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u vincent-noel ${{ env.CONDA }}/envs/test/conda-bld/linux-aarch64/*.conda
+        
+    - name: Publish on CoLoMoTo
+      if: github.event_name == 'release'
+      run: |
+        anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/linux-aarch64/*.conda
+  
   build_macosx_defaults:
     runs-on: macos-13
 
