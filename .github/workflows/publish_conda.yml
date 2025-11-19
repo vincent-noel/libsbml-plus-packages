@@ -141,7 +141,7 @@ jobs:
         anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force -u colomoto ${{ env.CONDA }}/envs/test/conda-bld/linux-aarch64/*.conda
   
   build_macosx_defaults:
-    runs-on: macos-13
+    runs-on: macos-15-intel
 
     defaults:
       run:
@@ -186,7 +186,7 @@ jobs:
 
         
   build_macosx_conda_forge:
-    runs-on: macos-13
+    runs-on: macos-15-intel
 
     defaults:
       run:
